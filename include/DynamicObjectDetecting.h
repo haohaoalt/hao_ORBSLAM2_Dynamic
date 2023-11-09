@@ -1,3 +1,12 @@
+/*
+ * @Author: https://github.com/haohaoalt
+ * @Date: 2023-09-08 12:12:55
+ * @LastEditors: haohaoalt haohaoalt@163.com
+ * @LastEditTime: 2023-11-09 10:07:07
+ * @FilePath: /hao_ORBSLAM2_Dynamic/include/DynamicObjectDetecting.h
+ * @Description: 
+ * Copyright (c) 2023 by haohaoalt@163.com, All Rights Reserved. 
+ */
 
 #ifndef DYNAMIC_FOBJECT_DETECTING_H
 #define DYNAMIC_FOBJECT_DETECTING_H
@@ -31,7 +40,9 @@ public:
     bool isFinished();
     void requestFinish();
 
+    // hayden: getDynamicObjectBbox实现
     std::vector<bbox_t> getDynamicObjectBbox(const cv::Mat& mImGray);
+    // hayden: getSpecifiedObjectBbox实现
     std::vector<bbox_t> getSpecifiedObjectBbox(const cv::Mat& mImGray);
     void saveDistance();
     void setImGrayPre(const cv::Mat &imGrayPre);

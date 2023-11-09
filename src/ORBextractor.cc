@@ -859,6 +859,7 @@ void ORBextractor::ComputeKeyPointsOctTree(vector<vector<KeyPoint> >& allKeypoin
         computeOrientation(mvImagePyramid[level], allKeypoints[level], umax);
 }
 
+// hayden: 去除动态区域的特征点。
 void ORBextractor::ComputeStaticKeyPointsOctTree(vector<vector<KeyPoint> >& allKeypoints, const std::vector<bbox_t>& dynaObjs, const double bboxSingleSideZoomSize)
 {
     allKeypoints.resize(nlevels);

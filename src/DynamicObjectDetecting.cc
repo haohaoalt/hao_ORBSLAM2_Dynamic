@@ -2,7 +2,7 @@
 
 #include "DynamicObjectDetecting.h"
 
-
+// hayden 新增加的类，主要用于实现getDynamicObjectBbox和getSpecifiedObjectBbox两个功能
 template<typename T, typename... Ts>
 std::unique_ptr<T> make_unique(Ts&&... params)
 {
@@ -42,7 +42,12 @@ void DynamicObjectDetecting::loadLabel()
         }
     }
 }
-
+// hayden: getDynamicObjectBbox实现
+/*
+目标检测：使用darknet框架实现的YOLOv4。
+动态特征点检测：使用LK光流跟踪特征点，然后根据特征点到极线的距离判断是否为动态特征点（注意：此处提取的特征点用作判断是否为动态目标框的条件，与ORB-SLAM2中提取的ORB特征点不同）。
+动态区域判断：动态区域为目标检测的矩形区域，通过矩形区域中动态特征点的数量和所占比例进行筛选。
+*/
 std::vector<bbox_t> DynamicObjectDetecting::getDynamicObjectBbox(const cv::Mat& mImGray) {
     std::vector<bbox_t> results = detector->detect(mImGray, mDetectTh); 
     calcDynamicPoints(mImGray);
@@ -79,7 +84,9 @@ std::vector<bbox_t> DynamicObjectDetecting::getDynamicObjectBbox(const cv::Mat& 
     }
     return dynaObjs;
 }
-
+// hayden: getSpecifiedObjectBbox实现
+// 目标检测：使用darknet框架实现的YOLOv4。
+// 动态区域判断：动态区域为目标检测的矩形区域，通过先验的动态信息直接选择特征物体种类的矩形区域。
 std::vector<bbox_t> DynamicObjectDetecting::getSpecifiedObjectBbox(const cv::Mat& mImGray) {
     std::vector<bbox_t> results = detector->detect(mImGray, mDetectTh); 
     std::vector<bbox_t> dynaObjs;  
